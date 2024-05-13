@@ -1,0 +1,41 @@
+import RPi.GPIO as GPIO
+import time
+
+# Set GPIO mode
+GPIO.setmode(GPIO.BOARD)
+
+# Define pins
+relay_pin_16 = 10
+relay_pin_18 = 12
+
+# Setup GPIO pins
+GPIO.setup(relay_pin_16, GPIO.OUT)
+GPIO.setup(relay_pin_18, GPIO.OUT)
+
+def activate_relays():
+    GPIO.output(relay_pin_16, GPIO.HIGH)  # Activate relay on pin 16
+    GPIO.output(relay_pin_18, GPIO.HIGH)  # Activate relay on pin 18
+
+def deactivate_relays():
+    GPIO.output(relay_pin_16, GPIO.LOW)  # Deactivate relay on pin 16
+    GPIO.output(relay_pin_18, GPIO.LOW)  # Deactivate relay on pin 18
+
+def main():
+    try:
+        while True:
+            user_input = input("Enter 'on' to activate the relays, 'off' to deactivate: ").lower()
+
+            if user_input == 'on':
+                activate_relays()
+            elif user_input == 'off':
+                deactivate_relays()
+            else:
+                print("Invalid input. Please enter 'on' or 'off'.")
+
+    except KeyboardInterrupt:
+        print("\nExiting program...")
+    finally:
+        GPIO.cleanup()
+
+if __name__ == "__main__":
+    main()
